@@ -2,6 +2,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{times}
+\usepackage{textcomp}  % For \textcurrency and other symbols
 \usepackage{geometry}
 \usepackage{setspace}
 \usepackage{graphicx}
@@ -222,10 +223,10 @@
 
 \begin{flushright}
     \begin{tabular}{@{}l@{}}
-        \textbf{Guide Name}\\
-        [Designation]\\
-        Department of Computer Science and Engineering\\
-        [Institute Name]\\
+        \textbf{Guide Name} \\
+        [Designation] \\
+        Department of Computer Science and Engineering \\
+        [Institute Name] \\
         Date: \underline{\hspace{4cm}}
     \end{tabular}
 \end{flushright}
@@ -233,9 +234,9 @@
 \vspace{1cm}
 
 \begin{flushleft}
-    \textbf{Head of Department}\\
-    Department of Computer Science and Engineering\\
-    [Institute Name]\\
+    \textbf{Head of Department} \\
+    Department of Computer Science and Engineering \\
+    [Institute Name] \\
     Date: \underline{\hspace{4cm}}
 \end{flushleft}
 
@@ -255,10 +256,10 @@
 \vspace{2cm}
 
 \begin{flushright}
-    \textbf{Prakhar}\\
-    [Roll Number]\\
-    Department of Computer Science and Engineering\\
-    [Institute Name]\\
+    \textbf{Prakhar} \\
+    [Roll Number] \\
+    Department of Computer Science and Engineering \\
+    [Institute Name] \\
     Date: \underline{\hspace{4cm}}
 \end{flushright}
 
@@ -284,7 +285,7 @@ Finally, I extend my thanks to my family and friends for their unwavering suppor
 \vspace{2cm}
 
 \begin{flushright}
-    \textbf{Prakhar}\\
+    \textbf{Prakhar} \\
     [Roll Number]
 \end{flushright}
 
@@ -405,7 +406,7 @@ The Indian stock market, comprising the National Stock Exchange (NSE) and Bombay
 
 Traditional stock prediction methodologies suffer from several critical limitations. First, most academic machine learning projects report theoretical accuracies exceeding 80\% but fail catastrophically in live deployment due to lookahead bias---where future information inadvertently leaks into training features through improper cross-validation or feature scaling across the entire dataset \cite{lopez2019machine}. Second, these models typically ignore transaction costs (STT, brokerage, GST, slippage), which can erode 2--5\% of returns per trade in the Indian market \cite{sebi2023circular}. Third, black-box models provide no interpretable rationale for their predictions, making it impossible for fund managers to assess conviction or risk \cite{rudin2019stop}. Fourth, they fail to adapt to macro regime shifts such as sudden spikes in India VIX, FII sell-offs, or RBI policy changes that systematically alter market dynamics \cite{baker2019macro}.
 
-The Indian market presents unique characteristics that exacerbate these problems. Foreign and Domestic Institutional Investor (FII/DII) flows drive significant intraday and positional moves, with net FII flows exceeding ₹2 lakh crore annually in recent years \cite{nse2024annual}. Promoter holding and pledging dynamics create idiosyncratic risks---pledged promoter equity above 20\% signals potential forced liquidation \cite{sebi2021pledging}. The India VIX, ranging from 10 to 35 historically, serves as a critical fear gauge that correlates strongly with subsequent market drawdowns \cite{bhaduri2020vix}. These factors cannot be captured by price charts alone.
+The Indian market presents unique characteristics that exacerbate these problems. Foreign and Domestic Institutional Investor (FII/DII) flows drive significant intraday and positional moves, with net FII flows exceeding \textcurrency2 lakh crore annually in recent years \cite{nse2024annual}. Promoter holding and pledging dynamics create idiosyncratic risks---pledged promoter equity above 20\% signals potential forced liquidation \cite{sebi2021pledging}. The India VIX, ranging from 10 to 35 historically, serves as a critical fear gauge that correlates strongly with subsequent market drawdowns \cite{bhaduri2020vix}. These factors cannot be captured by price charts alone.
 
 \section{Research Problem}
 The central research question this project addresses is:
@@ -565,7 +566,7 @@ The system follows a five-layer architecture as illustrated in Figure \ref{fig:a
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.9\textwidth]{architecture.png}
+    \fbox{\begin{minipage}{0.9\textwidth}\centering\textit{[Figure: Five-Layer System Architecture -- insert architecture.png here]}\end{minipage}}
     \caption{Five-Layer System Architecture}
     \label{fig:architecture}
 \end{figure}
@@ -617,7 +618,7 @@ Daily sentiment score for stock $i$:
 Sector-level sentiment is computed as market-cap-weighted average.
 
 \subsection{Macro and Institutional Data}
-India VIX, NIFTY 50 index, USD/INR, crude oil, and 10-year G-sec yield are fetched daily. FII/DII net flows (in ₹ crores) are sourced from NSE reports. Regime labels are computed daily (see Section 4.4).
+India VIX, NIFTY 50 index, USD/INR, crude oil, and 10-year G-sec yield are fetched daily. FII/DII net flows (in \textcurrency crores) are sourced from NSE reports. Regime labels are computed daily (see Section 4.4).
 
 \section{Layer 2: Machine Learning Ensemble}
 \subsection{Model Architecture}
@@ -716,129 +717,25 @@ Each factor scored 0--100 via percentile vs. sector peers. Weighted average norm
 Bull & Price > 50 DMA > 200 DMA & $< 15$ \\
 Bear & Price < 50 DMA < 200 DMA & $> 22$ \\
 High Volatility & Any & $> 22$ \\
-Sideways & Price oscillating around DMAs & $
-\begin{center}
-\begin{tabular}{lcc}
-\toprule
-\textbf{Regime} & \textbf{NIFTY vs DMA} & \textbf{India VIX} \
-\midrule
-Bull & Price > 50 DMA > 200 DMA & 
-<
-15
-<15 \
-Bear & Price < 50 DMA < 200 DMA & 
->
-22
->22 \
-High Volatility & Any & 
->
-22
->22 \
-Sideways & Price oscillating around DMAs & 
-15
-–
-22
-15–22 \
+Sideways & Price oscillating around DMAs & 15--22 \\
 \bottomrule
 \end{tabular}
 \end{center}
 
 FII/DII flow confirmation: Sustained FII buying (selling) in Bull (Bear) adds confidence.
-\textbf{Output:} Regime label + score 
-S
-6
-∈
-[
-0
-,
-1
-]
-S 
-6
-​
- ∈[0,1] (Bull=1.0, Sideways=0.5, Bear=0.0, High Vol=0.3).
+\textbf{Output:} Regime label + score $S_6 \in [0,1]$ (Bull=1.0, Sideways=0.5, Bear=0.0, High Vol=0.3).
 
 \subsection{Agent 7: Risk Agent}
 \textbf{Inputs:} ATR(14), 60-day rolling max drawdown, 20-day realized volatility, Beta vs NIFTY, volume anomaly score.
 \textbf{Logic:}
 \begin{itemize}
 \item \textit{Volatility Score:} $V = 1 - \frac{\text{Realized Vol}}{\text{Max Realized Vol (1 yr)}}$
-\item \textit{Drawdown Score:} 
-D
-=
-1
-−
-Current DD
-Max DD (1 yr)
-D=1− 
-Max DD (1 yr)
-Current DD
-​
- 
-\item \textit{Liquidity Score:} 
-L
-=
-1
-−
-∣
-Volume Z-score
-∣
-3
-L=1− 
-3
-∣Volume Z-score∣
-​
-  (clipped)
-\item \textit{Beta Penalty:} 
-B
-=
-max
-⁡
-(
-0
-,
-1
-−
-∣
-β
-−
-1
-∣
-)
-B=max(0,1−∣β−1∣)
+\item \textit{Drawdown Score:} $D = 1 - \frac{\text{Current DD}}{\text{Max DD (1 yr)}}$
+\item \textit{Liquidity Score:} $L = 1 - \frac{|\text{Volume Z-score}|}{3}$ (clipped)
+\item \textit{Beta Penalty:} $B = \max(0, 1 - |\beta - 1|)$
 \end{itemize}
-Composite risk score: 
-S
-7
-=
-0.4
-V
-+
-0.3
-D
-+
-0.2
-L
-+
-0.1
-B
-S 
-7
-​
- =0.4V+0.3D+0.2L+0.1B.
-\textbf{Output:} 
-S
-7
-∈
-[
-0
-,
-1
-]
-S 
-7
-​
- ∈[0,1], risk flags (high vol, high DD, low liquidity).
+Composite risk score: $S_7 = 0.4V + 0.3D + 0.2L + 0.1B$.
+\textbf{Output:} $S_7 \in [0,1]$, risk flags (high vol, high DD, low liquidity).
 
 \section{Layer 4: Decision and Risk Engine}
 \subsection{Weighted Consensus}
@@ -849,84 +746,27 @@ S_{\text{raw}} = 0.25 S_2 + 0.25 S_3 + 0.20 S_5 + 0.15 S_4 + 0.10 S_6 + 0.05 S_7
 
 \subsection{Risk Adjustment and Veto Logic}
 \begin{enumerate}
-\item \textbf{High Risk Throttle:} If Risk Agent flags high risk (
-S
-7
-<
-0.3
-S 
-7
-​
- <0.3) and 
-S
-raw
->
-0.5
-S 
-raw
-​
- >0.5:
+\item \textbf{High Risk Throttle:} If Risk Agent flags high risk ($S_7 < 0.3$) and $S_{\text{raw}} > 0.5$:
 \begin{equation}
-S{\text{adj}} = S{\text{raw}} \times 0.70
+S_{\text{adj}} = S_{\text{raw}} \times 0.70
 \end{equation}
-\item \textbf{Low Risk Boost:} If 
-S
-7
->
-0.7
-S 
-7
-​
- >0.7 and Technical Agent bullish (
-S
-2
->
-0.6
-S 
-2
-​
- >0.6):
+\item \textbf{Low Risk Boost:} If $S_7 > 0.7$ and Technical Agent bullish ($S_2 > 0.6$):
 \begin{equation}
-S{\text{adj}} = \min(1.0, S{\text{raw}} \times 1.10)
+S_{\text{adj}} = \min(1.0, S_{\text{raw}} \times 1.10)
 \end{equation}
-\item \textbf{Governance Veto:} If 
-≥
-3
-≥3 critical governance flags (Debt/Eq 
->
-1.5
->1.5, Pledge 
->
-30
-%
->30%, CFO/PAT 
-<
-0.5
-<0.5, Auditor qualification):
+\item \textbf{Governance Veto:} If $\ge 3$ critical governance flags (Debt/Eq $> 1.5$, Pledge $> 30\%$, CFO/PAT $< 0.5$, Auditor qualification):
 \begin{equation}
-S{\text{final}} = \min(S{\text{adj}}, 0.35) \quad \text{(Forces SELL/HOLD)}
+S_{\text{final}} = \min(S_{\text{adj}}, 0.35) \quad \text{(Forces SELL/HOLD)}
 \end{equation}
-\item \textbf{Promoter Pledge Veto:} If Pledge 
->
-50
-%
->50%: Hard SELL (
-S
-final
-=
-0
-S 
-final
-​
- =0).
+\item \textbf{Promoter Pledge Veto:} If Pledge $> 50\%$: Hard SELL ($S_{\text{final}} = 0$).
 \end{enumerate}
 
 \subsection{Recommendation Thresholds}
 \begin{equation}
 r =
 \begin{cases}
-\text{BUY} & S{\text{final}} \ge 0.65 \
-\text{HOLD} & 0.35 < S{\text{final}} < 0.65 \
+\text{BUY} & S_{\text{final}} \ge 0.65 \\
+\text{HOLD} & 0.35 < S_{\text{final}} < 0.65 \\
 \text{SELL} & S_{\text{final}} \le 0.35
 \end{cases}
 \end{equation}
@@ -934,72 +774,18 @@ r =
 \subsection{Confidence Calculation}
 Agent agreement measured by inverse score dispersion:
 \begin{equation}
-\text{Agreement} = 1 - \frac{\sigma({S_2, S_3, S_4, S_5, S_6, S_7})}{0.5}
+\text{Agreement} = 1 - \frac{\sigma(\{S_2, S_3, S_4, S_5, S_6, S_7\})}{0.5}
 \end{equation}
 Final confidence:
 \begin{equation}
-C{\text{final}} = 0.60 \times \frac{1}{6}\sum{k=2}^7 C_k + 0.40 \times \text{Agreement}
+C_{\text{final}} = 0.60 \times \frac{1}{6}\sum_{k=2}^7 C_k + 0.40 \times \text{Agreement}
 \end{equation}
 
 \subsection{Trade Parameter Calculation}
 \begin{itemize}
-\item \textbf{Entry Price:} Current close 
-C
-t
-C 
-t
-​
-  (or VWAP if available)
-\item \textbf{Stop-Loss:} 
-S
-L
-=
-C
-t
-−
-2
-×
-ATR
-(
-14
-)
-SL=C 
-t
-​
- −2×ATR(14) (BUY); 
-S
-L
-=
-C
-t
-+
-2
-×
-ATR
-(
-14
-)
-SL=C 
-t
-​
- +2×ATR(14) (SELL)
-\item \textbf{Target Price:} 
-T
-P
-=
-C
-t
-+
-3
-×
-ATR
-(
-14
-)
-TP=C 
-t
-​
- +3×ATR(14) (BUY); 
+\item \textbf{Entry Price:} Current close $C_t$ (or VWAP if available)
+\item \textbf{Stop-Loss:} $SL = C_t - 2 \times \text{ATR}(14)$ (BUY); $SL = C_t + 2 \times \text{ATR}(14)$ (SELL)
+\item \textbf{Target Price:} $TP = C_t + 3 \times \text{ATR}(14)$ (BUY); $TP = C_t - 3 \times \text{ATR}(14)$ (SELL) 
 T
 P
 =
@@ -1122,6 +908,33 @@ Each factor evaluated daily, flagged if threshold breached:
 40
 %
 >40% revenue
+\item Regulatory/Litigation: Active SEBI/tax/NCLT proceedings
+\item Sector Headwinds: Commodity inflation, regulatory adverse, currency volatility
+\end{enumerate}
+
+\subsection{Trade Parameter Calculation (cont.)}
+\begin{itemize}
+\item \textbf{Risk-to-Reward Ratio:} $RRR = \frac{|TP - C_t|}{|C_t - SL|}$ (target 1.5:1 minimum)
+\item \textbf{Position Size:} Volatility-targeted: $\text{Size} = \frac{0.02 \times \text{Capital}}{\text{ATR}(14) \times C_t}$, capped at 5\% per position
+\end{itemize}
+
+\subsection{15-Factor Corporate Governance Audit}
+Each factor evaluated daily, flagged if threshold breached:
+
+\begin{enumerate}
+\item High Debt: Net Debt/EBITDA $> 3\times$ or Debt/Equity $> 1.0$
+\item High Interest Burden: Interest Coverage $< 3.0\times$
+\item Declining Margins: 3-year operating margin CAGR $< -2\%$
+\item Poor Cash Flow Quality: CFO/PAT $< 80\%$
+\item High Receivables: Debtor Days $> 1.5\times$ Sector Median
+\item Inventory Bloat: Inventory Days $> 1.5\times$ Sector Median
+\item Declining ROCE/ROE: Current $< 12\%$ and 3-year trend negative
+\item High Valuation: P/E, P/B, EV/EBITDA $> 2\sigma$ above 5-year median
+\item Promoter Pledging: Pledged shares $> 20\%$ of promoter holding
+\item Promoter Holding Decline: $> 5\%$ absolute decline in 1 year
+\item Corporate Governance: Auditor qualification, related-party $> 10\%$ revenue, board independence $< 50\%$
+\item Profitability Weakness: Net Margin $< 5\%$ or inconsistent
+\item Customer Concentration: Top 3 clients $> 40\%$ revenue
 \item Regulatory/Litigation: Active SEBI/tax/NCLT proceedings
 \item Sector Headwinds: Commodity inflation, regulatory adverse, currency volatility
 \end{enumerate}
@@ -2141,8 +1954,8 @@ with st.sidebar:
     st.metric("NIFTY 50", f"{nifty:.2f}", f"{nifty_chg:+.2f}%")
     st.metric("India VIX", f"{vix:.2f}", 
               delta_color="inverse" if vix > 22 else "normal")
-    st.metric("FII Flow", f"₹{fii:.0f} Cr")
-    st.metric("DII Flow", f"₹{dii:.0f} Cr")
+    st.metric("FII Flow", f"\textcurrency{fii:.0f} Cr")
+    st.metric("DII Flow", f"\textcurrency{dii:.0f} Cr")
 
 # Main area
 analysis = run_analysis(symbol)
@@ -2151,7 +1964,7 @@ analysis = run_analysis(symbol)
 col1, col2, col3, col4 = st.columns(4)
 col1.metric("Recommendation", analysis['recommendation'],
             delta=f"Confidence: {analysis['confidence']:.0%}")
-col2.metric("Current Price", f"₹{analysis['price']:.2f}")
+col2.metric("Current Price", f"\textcurrency{analysis['price']:.2f}")
 col3.metric("Risk/Reward", f"{analysis['rrr']:.2f}:1")
 col4.metric("Position Size", f"{analysis['position_pct']:.1f}%")
 
@@ -2251,7 +2064,7 @@ redis_data:
 \item \textbf{Out-of-Sample Test Period:} January 2025 -- October 2026 (22 months, ~460 trading days)
 \item \textbf{Walk-Forward:} Expanding window, 6-month test windows, 5-day purge
 \item \textbf{Transaction Cost:} 0.10% round-trip (STT + brokerage + GST + stamp + slippage)
-\item \textbf{Initial Capital:} ₹1 Crore
+\item \textbf{Initial Capital:} \textcurrency1 Crore
 \item \textbf{Max Position:} 5% per stock, 20% per sector
 \item \textbf{Risk per Trade:} 2% of equity (volatility-targeted via ATR)
 \end{itemize}
@@ -2330,7 +2143,7 @@ Turnover (annual) & 0.2x & 3.8x & 3.2x & 2.9x & \textbf{2.4x} \
 \section{Equity Curve Analysis}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{equity_curves.png}
+\fbox{\begin{minipage}{0.9\textwidth}\centering\textit{[Figure: Equity Curves -- insert equity_curves.png here]}\end{minipage}}
 \caption{Equity Curves: System D vs Benchmarks (Out-of-Sample)}
 \label{fig:equity_curves}
 \end{figure}
@@ -2346,7 +2159,7 @@ Figure \ref{fig:equity_curves} shows:
 \section{Monthly Returns Distribution}
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.9\textwidth]{monthly_returns.png}
+\fbox{\begin{minipage}{0.9\textwidth}\centering\textit{[Figure: Monthly Returns Distribution -- insert monthly_returns.png here]}\end{minipage}}
 \caption{Monthly Returns Distribution: System D}
 \label{fig:monthly_returns}
 \end{figure}
